@@ -1,4 +1,4 @@
-package com.todo.todo;
+package com.todo.todo.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

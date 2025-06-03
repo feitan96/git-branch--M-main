@@ -1,8 +1,10 @@
-package com.todo.todo;
+package com.todo.todo.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import com.todo.todo.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
