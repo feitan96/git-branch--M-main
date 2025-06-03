@@ -38,5 +38,29 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    //UPDATE - update user by id
+    public User updateUser(Integer id, @Valid User updatedUser){
+        try{
+            return userRepository.findById(id)
+                .map(existingUser -> {
+                    if(!existingUser.getEmail().equals(updatedUser.getEmail()) &&
+                        userRepository.existsByEmail(updatedUser.getEmail())) {
+                        throw new RuntimeException("User with this email already exists: " + updatedUser.getEmail());
+                    }
+
+                    //update fields
+                    existingUser.setName(updatedUser.getName());
+                    existingUser.setEmail(updatedUser.getEmail());
+                    existingUser.setPassword(updatedUser.getPassword());
+
+                    return userRepository.save(existingUser);
+                })
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+        } catch (RuntimeException e){
+            throw new RuntimeException("User not found with id: " + id);
+        }
+    }
+
+    //DELETE - delete user by id
 
 }
