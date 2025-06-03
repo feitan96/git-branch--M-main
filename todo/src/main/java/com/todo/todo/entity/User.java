@@ -1,9 +1,9 @@
 package com.todo.todo.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 import lombok.Data;
 
 @Entity
@@ -12,15 +12,20 @@ import lombok.Data;
 public class User { 
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer  id;
 
+    @NotBlank(message = "Name is required")
     @Column(name = "name")
     private String name;
 
-    @Column(name = "email")
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email format")
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "password")
+    @NotBlank(message = "Password is required")
+    @Column(name = "password", nullable = false)
     private String password;
 }
