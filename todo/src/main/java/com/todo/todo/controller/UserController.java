@@ -1,12 +1,14 @@
 package com.todo.todo.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,4 +45,22 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK); 
 
     }
+
+    //READ - GET /api/users/{id}
+    @GetMapping("/{id}")
+     public ResponseEntity<?> getUserById(@PathVariable Integer id) {
+        try {
+            Optional<User> user = userService.getUserById(id);
+            if (user.isPresent()){
+                return new ResponseEntity<>(user.get(), HttpStatus.OK);
+            } else {
+              return new ResponseEntity<>("User not found with id: " + id, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+     }
+
+    //UPDATE - PUT /api/users/{id}
+    //DELETE - DELETE /api/users/{id}
 }

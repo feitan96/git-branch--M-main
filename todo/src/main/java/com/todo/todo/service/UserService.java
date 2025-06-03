@@ -32,4 +32,11 @@ public class UserService {
     public List<User> getAllUsers(){
         return userRepository.findAll();
     }
+
+    //READ - get user by id
+    public Optional<User> getUserById(Integer id){
+        return userRepository.findById(id);
+    }
+
+
 }
